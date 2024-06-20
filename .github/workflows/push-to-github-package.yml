@@ -1,4 +1,4 @@
-name: Deploy to Dev MINOR
+name: Push To Github Package
 
 on:
   push:

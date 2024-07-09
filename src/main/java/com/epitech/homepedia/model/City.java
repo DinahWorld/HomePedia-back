@@ -1,7 +1,10 @@
 package com.epitech.homepedia.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -9,6 +12,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "city")
 @Data
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class City {
     @Id
     @GeneratedValue(strategy = IDENTITY)

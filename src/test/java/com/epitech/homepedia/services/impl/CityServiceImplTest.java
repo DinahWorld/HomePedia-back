@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CityServiceImplTest {
+class CityServiceImplTest {
 
     @Mock
     private CityRepository repository;
@@ -51,7 +51,7 @@ public class CityServiceImplTest {
         List<CityDTO> result = service.getAllCity();
 
         assertEquals(1, result.size());
-        assertEquals(cityDTO, result.getFirst());
+        assertEquals(cityDTO, result.get(0));
     }
 
     @Test

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DepartmentServiceImplTest {
+class DepartmentServiceImplTest {
 
     @Mock
     private DepartmentRepository repository;
@@ -51,7 +51,7 @@ public class DepartmentServiceImplTest {
         List<DepartmentDTO> result = service.getAllDepartement();
 
         assertEquals(1, result.size());
-        assertEquals(departmentDTO, result.getFirst());
+        assertEquals(departmentDTO, result.get(0));
     }
 
     @Test

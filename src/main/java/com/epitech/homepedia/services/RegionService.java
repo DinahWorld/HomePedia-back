@@ -1,20 +1,18 @@
 package com.epitech.homepedia.services;
 
 import com.epitech.homepedia.dto.RegionDTO;
-import com.epitech.homepedia.model.Region;
+import org.geojson.FeatureCollection;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 public interface RegionService {
-    List<RegionDTO> getAllRegions();
+    void addRegion(FeatureCollection featureCollection);
 
-    RegionDTO getRegionDTO(Long id);
+    RegionDTO getRegion(String region);
 
-    void addRegion(RegionDTO region);
+    void addPrice(BigDecimal price, String codeReg);
 
-    void updateRegionName(Long id, RegionDTO region);
+    void addPriceAppart(BigDecimal price, String codeReg);
 
-    void deleteRegion(Long id);
-
-    Region getRegionByName(String name);
+    void addPriceMaison(BigDecimal price, String codeReg);
 }

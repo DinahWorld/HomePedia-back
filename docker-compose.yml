@@ -1,17 +1,17 @@
 version: '3.8'
 services:
   homepedia-back:
-    container_name: sasia-back
+    container_name: homepedia-back
     image: ghcr.io/dinahworld/homepedia-back:latest
     ports:
       - "8080:8080"
     env_file:
       - .env
     depends_on:
-      - sasia-bdd
+      - homepedia-bdd
   homepedia-bdd:
     container_name: homepedia
-    image: postgres:latest
+    image: postgis/postgis
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}

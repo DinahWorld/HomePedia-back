@@ -1,9 +1,9 @@
 package com.epitech.homepedia.services.impl;
 
-import com.epitech.homepedia.dto.RegionDTO;
-import com.epitech.homepedia.model.Region;
-import com.epitech.homepedia.repository.RegionRepository;
-import com.epitech.homepedia.services.RegionService;
+import com.epitech.homepedia.dto.DepartmentDTO;
+import com.epitech.homepedia.model.Departement;
+import com.epitech.homepedia.repository.DepartementRepository;
+import com.epitech.homepedia.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,12 @@ import java.util.stream.Stream;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RegionServiceImpl implements RegionService {
-    private final RegionRepository regionRepository;
+public class DepartementServiceImpl implements DepartmentService {
+    private final DepartementRepository departementRepository;
 
     @SneakyThrows
     @Override
-    public void addRegion(FeatureCollection featureCollection) {
+    public void addDepartement(FeatureCollection featureCollection) {
         featureCollection.getFeatures().stream()
                 .filter(feature -> feature.getGeometry() instanceof Polygon || feature.getGeometry() instanceof MultiPolygon) // Filtrer les polygones et les multipolygones
                 .flatMap(feature -> convertToRegions(feature).stream()) // Convertir chaque feature en une ou plusieurs régions
@@ -35,14 +35,14 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public RegionDTO getRegion(String regionName) {
-        Region region = regionRepository.findByNom(regionName).orElse(null);
-        org.geojson.Polygon geoJsonPolygon = new org.geojson.Polygon(
+    public DepartmentDTO getDepartement(String regionName) {
+        Departement region = departementRepository.findByNom(regionName).orElse(null);
+        Polygon geoJsonPolygon = new Polygon(
                 Arrays.stream(region.getGeometry().getCoordinates())
                         .map(coord -> new LngLatAlt(coord.x, coord.y))
                         .collect(Collectors.toList())
         );
-        RegionDTO regionDTO = new RegionDTO();
+        DepartmentDTO regionDTO = new DepartmentDTO();
         regionDTO.setName(regionName);
         regionDTO.setPolygon(geoJsonPolygon);
         regionDTO.setCode(Integer.valueOf(region.getCode()));
@@ -54,35 +54,35 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public void addPrice(BigDecimal price, String codeReg) {
-        var regionList = regionRepository.findAllByCode(codeReg);
-        regionRepository.deleteAll(regionList);
-        for (Region region : regionList) {
-            region.setPrice(price);
+        var regionList = departementRepository.findAllByCode(codeReg);
+        departementRepository.deleteAll(regionList);
+        for (Departement departement : regionList) {
+            departement.setPrice(price);
         }
-        regionRepository.saveAll(regionList);
+        departementRepository.saveAll(regionList);
     }
 
     @Override
     public void addPriceMaison(BigDecimal price, String codeReg) {
-        var regionList = regionRepository.findAllByCode(codeReg);
-        regionRepository.deleteAll(regionList);
-        for (Region region : regionList) {
-            region.setPriceMaison(price);
+        var regionList = departementRepository.findAllByCode(codeReg);
+        departementRepository.deleteAll(regionList);
+        for (Departement departement : regionList) {
+            departement.setPriceMaison(price);
         }
-        regionRepository.saveAll(regionList);
+        departementRepository.saveAll(regionList);
     }
 
     @Override
     public void addPriceAppart(BigDecimal price, String codeReg) {
-        var regionList = regionRepository.findAllByCode(codeReg);
-        regionRepository.deleteAll(regionList);
-        for (Region region : regionList) {
-            region.setPriceAppart(price);
+        var regionList = departementRepository.findAllByCode(codeReg);
+        departementRepository.deleteAll(regionList);
+        for (Departement departement : regionList) {
+            departement.setPriceAppart(price);
         }
-        regionRepository.saveAll(regionList);
+        departementRepository.saveAll(regionList);
     }
 
-    private List<Region> convertToRegions(Feature feature) {
+    private List<Departement> convertToRegions(Feature feature) {
         if (feature.getGeometry() instanceof Polygon) {
             try {
                 return List.of(convertToRegion(feature, (Polygon) feature.getGeometry()));
@@ -124,17 +124,17 @@ public class RegionServiceImpl implements RegionService {
     }
 
 
-    private Region convertToRegionFromPolygon(Feature feature, org.locationtech.jts.geom.Polygon geoJsonPolygon) {
+    private Departement convertToRegionFromPolygon(Feature feature, org.locationtech.jts.geom.Polygon geoJsonPolygon) {
         // Création de l'entité Region
-        Region region = new Region();
+        Departement region = new Departement();
         region.setCode(feature.getProperty("code").toString());
         region.setNom(feature.getProperty("nom").toString());
         region.setGeometry(geoJsonPolygon);
 
-        return regionRepository.save(region);
+        return departementRepository.save(region);
     }
 
-    private Region convertToRegion(Feature feature, Polygon geoJsonPolygon) {
+    private Departement convertToRegion(Feature feature, Polygon geoJsonPolygon) {
         // Conversion de Polygon GeoJSON en Polygon JTS
         org.locationtech.jts.geom.Polygon jtsPolygon = new GeometryFactory().createPolygon(
                 geoJsonPolygon.getCoordinates().stream()
@@ -144,11 +144,11 @@ public class RegionServiceImpl implements RegionService {
         );
 
         // Création de l'entité Region
-        Region region = new Region();
+        Departement region = new Departement();
         region.setCode(feature.getProperty("code").toString());
         region.setNom(feature.getProperty("nom").toString());
         region.setGeometry(jtsPolygon);
 
-        return regionRepository.save(region);
+        return departementRepository.save(region);
     }
 }

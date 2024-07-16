@@ -7,16 +7,16 @@ import org.locationtech.jts.geom.Polygon;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "departements")
+@Table(name = "communes")
 @Data
-public class Departement {
+public class Communes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
     private String nom;
-    private BigDecimal priceAppart;
     private BigDecimal priceMaison;
+    private BigDecimal priceAppart;
 
     @Column(columnDefinition = "geometry(Polygon, 4326)")
     private Polygon geometry;

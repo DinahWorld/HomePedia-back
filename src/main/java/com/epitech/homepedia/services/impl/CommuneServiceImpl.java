@@ -1,9 +1,9 @@
 package com.epitech.homepedia.services.impl;
 
 import com.epitech.homepedia.dto.RegionDTO;
-import com.epitech.homepedia.model.Region;
-import com.epitech.homepedia.repository.RegionRepository;
-import com.epitech.homepedia.services.RegionService;
+import com.epitech.homepedia.model.Communes;
+import com.epitech.homepedia.repository.CommunesRepository;
+import com.epitech.homepedia.services.CommunesService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,12 @@ import java.util.stream.Stream;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RegionServiceImpl implements RegionService {
-    private final RegionRepository regionRepository;
+public class CommuneServiceImpl implements CommunesService {
+    private final CommunesRepository regionRepository;
 
     @SneakyThrows
     @Override
-    public void addRegion(FeatureCollection featureCollection) {
+    public void addCommune(FeatureCollection featureCollection) {
         featureCollection.getFeatures().stream()
                 .filter(feature -> feature.getGeometry() instanceof Polygon || feature.getGeometry() instanceof MultiPolygon) // Filtrer les polygones et les multipolygones
                 .flatMap(feature -> convertToRegions(feature).stream()) // Convertir chaque feature en une ou plusieurs régions
@@ -35,10 +35,10 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public RegionDTO getRegion(String regionName) {
+    public RegionDTO getCommune(String regionName) {
         var departementList = regionRepository.findAllByNom(regionName);
         List<List<List<LngLatAlt>>> list = new ArrayList<>();
-        for (Region departement : departementList) {
+        for (Communes departement : departementList) {
             Polygon geoJsonPolygon = new Polygon(
                     Arrays.stream(departement.getGeometry().getCoordinates())
                             .map(coord -> new LngLatAlt(coord.x, coord.y))
@@ -61,7 +61,7 @@ public class RegionServiceImpl implements RegionService {
     public void addPriceMaison(BigDecimal price, String codeReg) {
         var regionList = regionRepository.findAllByCode(codeReg);
         regionRepository.deleteAll(regionList);
-        for (Region region : regionList) {
+        for (Communes region : regionList) {
             region.setPriceMaison(price);
         }
         regionRepository.saveAll(regionList);
@@ -71,13 +71,13 @@ public class RegionServiceImpl implements RegionService {
     public void addPriceAppart(BigDecimal price, String codeReg) {
         var regionList = regionRepository.findAllByCode(codeReg);
         regionRepository.deleteAll(regionList);
-        for (Region region : regionList) {
+        for (Communes region : regionList) {
             region.setPriceAppart(price);
         }
         regionRepository.saveAll(regionList);
     }
 
-    private List<Region> convertToRegions(Feature feature) {
+    private List<Communes> convertToRegions(Feature feature) {
         if (feature.getGeometry() instanceof Polygon) {
             try {
                 return List.of(convertToRegion(feature, (Polygon) feature.getGeometry()));
@@ -119,9 +119,9 @@ public class RegionServiceImpl implements RegionService {
     }
 
 
-    private Region convertToRegionFromPolygon(Feature feature, org.locationtech.jts.geom.Polygon geoJsonPolygon) {
+    private Communes convertToRegionFromPolygon(Feature feature, org.locationtech.jts.geom.Polygon geoJsonPolygon) {
         // Création de l'entité Region
-        Region region = new Region();
+        Communes region = new Communes();
         region.setCode(feature.getProperty("code").toString());
         region.setNom(feature.getProperty("nom").toString());
         region.setGeometry(geoJsonPolygon);
@@ -129,7 +129,7 @@ public class RegionServiceImpl implements RegionService {
         return regionRepository.save(region);
     }
 
-    private Region convertToRegion(Feature feature, Polygon geoJsonPolygon) {
+    private Communes convertToRegion(Feature feature, Polygon geoJsonPolygon) {
         // Conversion de Polygon GeoJSON en Polygon JTS
         org.locationtech.jts.geom.Polygon jtsPolygon = new GeometryFactory().createPolygon(
                 geoJsonPolygon.getCoordinates().stream()
@@ -139,7 +139,7 @@ public class RegionServiceImpl implements RegionService {
         );
 
         // Création de l'entité Region
-        Region region = new Region();
+        Communes region = new Communes();
         region.setCode(feature.getProperty("code").toString());
         region.setNom(feature.getProperty("nom").toString());
         region.setGeometry(jtsPolygon);

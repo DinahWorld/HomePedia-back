@@ -15,7 +15,6 @@ public class Region {
     private Long id;
     private String code;
     private String nom;
-    private BigDecimal price;
     private BigDecimal priceMaison;
     private BigDecimal priceAppart;
 

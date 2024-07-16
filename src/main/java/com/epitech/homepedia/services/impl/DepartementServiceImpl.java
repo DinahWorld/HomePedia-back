@@ -36,30 +36,25 @@ public class DepartementServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO getDepartement(String regionName) {
-        Departement region = departementRepository.findByNom(regionName).orElse(null);
-        Polygon geoJsonPolygon = new Polygon(
-                Arrays.stream(region.getGeometry().getCoordinates())
-                        .map(coord -> new LngLatAlt(coord.x, coord.y))
-                        .collect(Collectors.toList())
-        );
+        var departementList = departementRepository.findAllByNom(regionName);
+        List<List<List<LngLatAlt>>> list = new ArrayList<>();
+        for (Departement departement : departementList) {
+            Polygon geoJsonPolygon = new Polygon(
+                    Arrays.stream(departement.getGeometry().getCoordinates())
+                            .map(coord -> new LngLatAlt(coord.x, coord.y))
+                            .collect(Collectors.toList())
+            );
+            list.add(geoJsonPolygon.getCoordinates());
+        }
+
         DepartmentDTO regionDTO = new DepartmentDTO();
         regionDTO.setName(regionName);
-        regionDTO.setPolygon(geoJsonPolygon);
-        regionDTO.setCode(Integer.valueOf(region.getCode()));
-        regionDTO.setPriceMaison(region.getPriceMaison());
-        regionDTO.setPriceAppart(region.getPriceAppart());
+        regionDTO.setPolygon(list);
+        regionDTO.setCode(Integer.valueOf(departementList.get(0).getCode()));
+        regionDTO.setPriceMaison(departementList.get(0).getPriceMaison());
+        regionDTO.setPriceAppart(departementList.get(0).getPriceAppart());
         return regionDTO;
 
-    }
-
-    @Override
-    public void addPrice(BigDecimal price, String codeReg) {
-        var regionList = departementRepository.findAllByCode(codeReg);
-        departementRepository.deleteAll(regionList);
-        for (Departement departement : regionList) {
-            departement.setPrice(price);
-        }
-        departementRepository.saveAll(regionList);
     }
 
     @Override

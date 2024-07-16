@@ -10,8 +10,6 @@ public interface DepartmentService {
 
     DepartmentDTO getDepartement(String region);
 
-    void addPrice(BigDecimal price, String codeReg);
-
     void addPriceMaison(BigDecimal price, String codeReg);
 
     void addPriceAppart(BigDecimal price, String codeReg);

@@ -9,11 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface DepartementRepository extends JpaRepository<Departement, Long> {
-    List<Departement> findAllByNom(String region);
-
     Optional<Departement> findByNom(String regionName);
 
     Optional<Departement> findByCode(String codeReg);
 
     List<Departement> findAllByCode(String codeReg);
+
+    List<Departement> findAllByNom(String nom);
 }

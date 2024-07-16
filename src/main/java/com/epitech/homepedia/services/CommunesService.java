@@ -5,10 +5,10 @@ import org.geojson.FeatureCollection;
 
 import java.math.BigDecimal;
 
-public interface RegionService {
-    void addRegion(FeatureCollection featureCollection);
+public interface CommunesService {
+    void addCommune(FeatureCollection featureCollection);
 
-    RegionDTO getRegion(String region);
+    RegionDTO getCommune(String region);
 
     void addPriceAppart(BigDecimal price, String codeReg);
 

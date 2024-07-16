@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.geojson.Polygon;
+import org.geojson.LngLatAlt;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DepartmentDTO {
     private String name;
-    private Polygon polygon;
+    private List<List<List<LngLatAlt>>> polygon;
     private Integer code;
     private BigDecimal priceMaison;
     private BigDecimal priceAppart;

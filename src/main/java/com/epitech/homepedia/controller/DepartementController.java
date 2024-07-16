@@ -1,6 +1,6 @@
 package com.epitech.homepedia.controller;
 
-import com.epitech.homepedia.dto.RegionDTO;
+import com.epitech.homepedia.dto.DepartmentDTO;
 import com.epitech.homepedia.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.geojson.FeatureCollection;
@@ -22,7 +22,7 @@ public class DepartementController {
     }
 
     @GetMapping
-    public ResponseEntity<RegionDTO> getDepartement(@RequestParam String departement) {
+    public ResponseEntity<DepartmentDTO> getDepartement(@RequestParam String departement) {
         return ResponseEntity.ok(departementService.getDepartement(departement));
     }
 

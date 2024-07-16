@@ -6,17 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.geojson.LngLatAlt;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @Data
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class DepartementColorDTO {
     private String name;
-    private String price;
+    private BigInteger price;
 
     public DepartementColorDTO(String nom, BigDecimal priceMaison) {
         this.name = nom;
-        this.price = String.valueOf(priceMaison);
+        this.price = priceMaison.toBigInteger();
     }
 }

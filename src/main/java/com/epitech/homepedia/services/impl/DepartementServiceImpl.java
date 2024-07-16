@@ -13,9 +13,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +35,8 @@ public class DepartementServiceImpl implements DepartmentService {
     @Override
     public DepartmentDTO getDepartement(String regionName) {
         var departementList = departementRepository.findAllByNom(regionName);
-        List<Polygon> list = new ArrayList<>();
+        var list = new GeometryCollection();
+        var poly = new Polygon();
         for (Departement departement : departementList) {
             Polygon geoJsonPolygon = new Polygon(
                     Arrays.stream(departement.getGeometry().getCoordinates())
@@ -45,18 +44,20 @@ public class DepartementServiceImpl implements DepartmentService {
                             .collect(Collectors.toList())
             );
             list.add(geoJsonPolygon);
-            break;
         }
 
         DepartmentDTO regionDTO = new DepartmentDTO();
-        regionDTO.setName(regionName);
+        regionDTO.setId(departementList.get(0).getId());
         regionDTO.setType("FeatureCollection");
         var feature = new Feature();
-        feature.setGeometry(list.get(0));
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("name", regionName);
+        properties.put("code", departementList.get(0).getCode());
+        properties.put("price_maison", departementList.get(0).getPriceMaison());
+        properties.put("price_appart", departementList.get(0).getPriceAppart());
+        feature.setProperties(properties);
+        feature.setGeometry(list);
         regionDTO.setFeatures(feature);
-        regionDTO.setCode(Integer.valueOf(departementList.get(0).getCode()));
-        regionDTO.setPriceMaison(departementList.get(0).getPriceMaison());
-        regionDTO.setPriceAppart(departementList.get(0).getPriceAppart());
         return regionDTO;
 
     }

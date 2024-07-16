@@ -18,8 +18,5 @@ import java.util.List;
 public class DepartmentDTO {
     private String type;
     private Feature features;
-    private String name;
-    private Integer code;
-    private BigDecimal priceMaison;
-    private BigDecimal priceAppart;
+    private Long id;
 }

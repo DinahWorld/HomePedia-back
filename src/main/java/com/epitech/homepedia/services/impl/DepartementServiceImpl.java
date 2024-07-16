@@ -1,5 +1,6 @@
 package com.epitech.homepedia.services.impl;
 
+import com.epitech.homepedia.dto.DepartementColorDTO;
 import com.epitech.homepedia.dto.DepartmentDTO;
 import com.epitech.homepedia.model.Departement;
 import com.epitech.homepedia.repository.DepartementRepository;
@@ -126,7 +127,7 @@ public class DepartementServiceImpl implements DepartmentService {
             var feature = new Feature();
             feature.setId(String.valueOf(departementList.get(0).getId()));
             Map<String, Object> properties = new HashMap<>();
-            properties.put("name", regionName);
+            properties.put("nom", regionName);
             properties.put("code", departementList.get(0).getCode());
             properties.put("price_maison", departementList.get(0).getPriceMaison());
             properties.put("price_appart", departementList.get(0).getPriceAppart());
@@ -152,7 +153,7 @@ public class DepartementServiceImpl implements DepartmentService {
             }
             regionDTO.getFeatures().add(feature);
         }
-
+        log.info("fini");
         return regionDTO;
 
     }
@@ -168,6 +169,97 @@ public class DepartementServiceImpl implements DepartmentService {
         departementRepository.saveAll(regionList);
     }
 
+    @Override
+    public List<DepartementColorDTO> getPriceColor() {
+        var code = List.of("95", "94", "93", "92", "91", "90", "89", "88",
+                "87",
+                "86",
+                "85",
+                "84",
+                "83",
+                "82",
+                "81",
+                "80",
+                "79",
+                "78",
+                "77",
+                "76",
+                "75",
+                "74",
+                "73",
+                "72",
+                "70",
+                "69",
+                "68",
+                "67",
+                "65",
+                "63",
+                "60",
+                "59",
+                "58",
+                "57",
+                "56",
+                "54",
+                "52",
+                "51",
+                "50",
+                "49",
+                "48",
+                "47",
+                "46",
+                "45",
+                "44",
+                "43",
+                "42",
+                "41",
+                "40",
+                "39",
+                "38",
+                "37",
+                "36",
+                "35",
+                "34",
+                "33",
+                "32",
+                "31",
+                "30",
+                "2B",
+                "2A",
+                "29",
+                "28",
+                "27",
+                "25",
+                "24",
+                "23",
+                "22",
+                "21",
+                "19",
+                "18",
+                "17",
+                "16",
+                "15",
+                "14",
+                "13",
+                "12",
+                "11",
+                "10",
+                "09",
+                "08",
+                "07",
+                "06",
+                "05",
+                "04",
+                "03",
+                "01");
+
+        List<DepartementColorDTO> color = new ArrayList<>();
+        for (String c : code) {
+            var departementList = departementRepository.findAllByCode(c);
+            color.add(new DepartementColorDTO(departementList.get(0).getNom(), departementList.get(0).getPriceMaison()));
+        }
+
+        return color;
+    }
     @Override
     public void addPriceAppart(BigDecimal price, String codeReg) {
         var regionList = departementRepository.findAllByCode(codeReg);

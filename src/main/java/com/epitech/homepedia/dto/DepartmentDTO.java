@@ -18,5 +18,4 @@ import java.util.List;
 public class DepartmentDTO {
     private String type;
     private Feature features;
-    private Long id;
 }

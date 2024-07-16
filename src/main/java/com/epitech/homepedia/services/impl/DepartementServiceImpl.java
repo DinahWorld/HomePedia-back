@@ -47,9 +47,9 @@ public class DepartementServiceImpl implements DepartmentService {
         }
 
         DepartmentDTO regionDTO = new DepartmentDTO();
-        regionDTO.setId(departementList.get(0).getId());
         regionDTO.setType("FeatureCollection");
         var feature = new Feature();
+        feature.setId(String.valueOf(departementList.get(0).getId()));
         Map<String, Object> properties = new HashMap<>();
         properties.put("name", regionName);
         properties.put("code", departementList.get(0).getCode());

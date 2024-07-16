@@ -37,25 +37,30 @@ public class DepartementServiceImpl implements DepartmentService {
     @Override
     public DepartmentDTO getDepartement(String regionName) {
         var departementList = departementRepository.findAllByNom(regionName);
-        List<List<List<LngLatAlt>>> list = new ArrayList<>();
+        List<Polygon> list = new ArrayList<>();
         for (Departement departement : departementList) {
             Polygon geoJsonPolygon = new Polygon(
                     Arrays.stream(departement.getGeometry().getCoordinates())
                             .map(coord -> new LngLatAlt(coord.x, coord.y))
                             .collect(Collectors.toList())
             );
-            list.add(geoJsonPolygon.getCoordinates());
+            list.add(geoJsonPolygon);
+            break;
         }
 
         DepartmentDTO regionDTO = new DepartmentDTO();
         regionDTO.setName(regionName);
-        regionDTO.setPolygon(list);
+        regionDTO.setType("FeatureCollection");
+        var feature = new Feature();
+        feature.setGeometry(list.get(0));
+        regionDTO.setFeatures(feature);
         regionDTO.setCode(Integer.valueOf(departementList.get(0).getCode()));
         regionDTO.setPriceMaison(departementList.get(0).getPriceMaison());
         regionDTO.setPriceAppart(departementList.get(0).getPriceAppart());
         return regionDTO;
 
     }
+
 
     @Override
     public void addPriceMaison(BigDecimal price, String codeReg) {

@@ -17,5 +17,5 @@ import java.util.List;
 @AllArgsConstructor
 public class DepartmentDTO {
     private String type;
-    private Feature features;
+    private List<Feature> features;
 }

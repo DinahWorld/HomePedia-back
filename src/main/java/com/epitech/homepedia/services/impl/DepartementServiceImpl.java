@@ -34,30 +34,125 @@ public class DepartementServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDTO getDepartement(String regionName) {
-        var departementList = departementRepository.findAllByNom(regionName);
-        var list = new GeometryCollection();
-        var poly = new Polygon();
-        for (Departement departement : departementList) {
-            Polygon geoJsonPolygon = new Polygon(
-                    Arrays.stream(departement.getGeometry().getCoordinates())
-                            .map(coord -> new LngLatAlt(coord.x, coord.y))
-                            .collect(Collectors.toList())
-            );
-            list.add(geoJsonPolygon);
-        }
-
         DepartmentDTO regionDTO = new DepartmentDTO();
         regionDTO.setType("FeatureCollection");
-        var feature = new Feature();
-        feature.setId(String.valueOf(departementList.get(0).getId()));
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("name", regionName);
-        properties.put("code", departementList.get(0).getCode());
-        properties.put("price_maison", departementList.get(0).getPriceMaison());
-        properties.put("price_appart", departementList.get(0).getPriceAppart());
-        feature.setProperties(properties);
-        feature.setGeometry(list);
-        regionDTO.setFeatures(feature);
+        regionDTO.setFeatures(new ArrayList<>());
+        var code = List.of("95", "94", "93", "92", "91", "90", "89", "88",
+                "87",
+                "86",
+                "85",
+                "84",
+                "83",
+                "82",
+                "81",
+                "80",
+                "79",
+                "78",
+                "77",
+                "76",
+                "75",
+                "74",
+                "73",
+                "72",
+                "70",
+                "69",
+                "68",
+                "67",
+                "65",
+                "63",
+                "60",
+                "59",
+                "58",
+                "57",
+                "56",
+                "54",
+                "52",
+                "51",
+                "50",
+                "49",
+                "48",
+                "47",
+                "46",
+                "45",
+                "44",
+                "43",
+                "42",
+                "41",
+                "40",
+                "39",
+                "38",
+                "37",
+                "36",
+                "35",
+                "34",
+                "33",
+                "32",
+                "31",
+                "30",
+                "2B",
+                "2A",
+                "29",
+                "28",
+                "27",
+                "25",
+                "24",
+                "23",
+                "22",
+                "21",
+                "19",
+                "18",
+                "17",
+                "16",
+                "15",
+                "14",
+                "13",
+                "12",
+                "11",
+                "10",
+                "09",
+                "08",
+                "07",
+                "06",
+                "05",
+                "04",
+                "03",
+                "01");
+
+        for (String c : code) {
+            var departementList = departementRepository.findAllByCode(c);
+            GeoJsonObject list;
+            MultiPolygon pl = new MultiPolygon();
+
+            var feature = new Feature();
+            feature.setId(String.valueOf(departementList.get(0).getId()));
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("name", regionName);
+            properties.put("code", departementList.get(0).getCode());
+            properties.put("price_maison", departementList.get(0).getPriceMaison());
+            properties.put("price_appart", departementList.get(0).getPriceAppart());
+            feature.setProperties(properties);
+
+
+            for (Departement departement : departementList) {
+                Polygon geoJsonPolygon = new Polygon(
+                        Arrays.stream(departement.getGeometry().getCoordinates())
+                                .map(coord -> new LngLatAlt(coord.x, coord.y))
+                                .collect(Collectors.toList())
+                );
+                if (departementList.size() > 0) {
+                    pl.add(geoJsonPolygon);
+                } else {
+                    feature.setGeometry(geoJsonPolygon);
+                }
+            }
+
+
+            if (departementList.size() > 0) {
+                feature.setGeometry(pl);
+            }
+            regionDTO.getFeatures().add(feature);
+        }
+
         return regionDTO;
 
     }

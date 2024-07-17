@@ -1,11 +1,10 @@
 package com.epitech.homepedia.services;
 
-import com.epitech.homepedia.dto.DepartementColorDTO;
+import com.epitech.homepedia.dto.BigDataDTO;
 import com.epitech.homepedia.dto.DepartmentDTO;
 import org.geojson.FeatureCollection;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public interface DepartmentService {
     void addDepartement(FeatureCollection featureCollection);
@@ -14,7 +13,7 @@ public interface DepartmentService {
 
     void addPriceMaison(BigDecimal price, String codeReg);
 
-    List<DepartementColorDTO> getPriceColor();
+    BigDataDTO getPriceColor();
 
     void addPriceAppart(BigDecimal price, String codeReg);
 }

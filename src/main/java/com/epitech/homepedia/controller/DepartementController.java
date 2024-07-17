@@ -1,6 +1,6 @@
 package com.epitech.homepedia.controller;
 
-import com.epitech.homepedia.dto.DepartementColorDTO;
+import com.epitech.homepedia.dto.BigDataDTO;
 import com.epitech.homepedia.dto.DepartmentDTO;
 import com.epitech.homepedia.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/departement")
@@ -29,7 +28,7 @@ public class DepartementController {
     }
 
     @GetMapping("/price")
-    public ResponseEntity<List<DepartementColorDTO>> getDepartement() {
+    public ResponseEntity<BigDataDTO> getDepartement() {
         return ResponseEntity.ok(departementService.getPriceColor());
     }
 

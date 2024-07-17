@@ -1,8 +1,10 @@
 package com.epitech.homepedia.services.impl;
 
-import com.epitech.homepedia.dto.DepartementColorDTO;
+import com.epitech.homepedia.dto.BigDataDTO;
+import com.epitech.homepedia.dto.DataDTO;
 import com.epitech.homepedia.dto.DepartmentDTO;
 import com.epitech.homepedia.model.Departement;
+import com.epitech.homepedia.repository.CommunesRepository;
 import com.epitech.homepedia.repository.DepartementRepository;
 import com.epitech.homepedia.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class DepartementServiceImpl implements DepartmentService {
     private final DepartementRepository departementRepository;
+    private final CommunesRepository communesRepository;
 
     @SneakyThrows
     @Override
@@ -170,7 +173,7 @@ public class DepartementServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<DepartementColorDTO> getPriceColor() {
+    public BigDataDTO getPriceColor() {
         var code = List.of("95", "94", "93", "92", "91", "90", "89", "88",
                 "87",
                 "86",
@@ -252,14 +255,19 @@ public class DepartementServiceImpl implements DepartmentService {
                 "03",
                 "01");
 
-        List<DepartementColorDTO> color = new ArrayList<>();
+        List<DataDTO> color = new ArrayList<>();
         for (String c : code) {
             var departementList = departementRepository.findAllByCode(c);
-            color.add(new DepartementColorDTO(departementList.get(0).getNom(), departementList.get(0).getPriceMaison()));
+            color.add(new DataDTO(departementList.get(0).getNom(), departementList.get(0).getPriceMaison()));
         }
+        var list = communesRepository.findAll();
 
-        return color;
+        BigDataDTO bigDataDTO = new BigDataDTO();
+        bigDataDTO.setDepartements(color);
+        bigDataDTO.setCommunes(list);
+        return bigDataDTO;
     }
+
     @Override
     public void addPriceAppart(BigDecimal price, String codeReg) {
         var regionList = departementRepository.findAllByCode(codeReg);

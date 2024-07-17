@@ -16,7 +16,7 @@ public class CommunesController {
 
     @PostMapping
     public ResponseEntity<String> createRegion(@RequestParam BigDecimal price,
-                                               @RequestParam Integer code) {
+                                               @RequestParam BigDecimal code) {
         regionService.addCommune(price, code);
         return ResponseEntity.ok("Region created");
     }

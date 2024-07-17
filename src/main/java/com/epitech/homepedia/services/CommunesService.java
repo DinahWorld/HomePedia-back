@@ -6,7 +6,7 @@ import org.geojson.FeatureCollection;
 import java.math.BigDecimal;
 
 public interface CommunesService {
-    void addCommune(BigDecimal price, Integer code);
+    void addCommune(BigDecimal price, BigDecimal code);
 
     RegionDTO getCommune(String region);
 

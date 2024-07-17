@@ -27,7 +27,7 @@ public class CommuneServiceImpl implements CommunesService {
 
     @SneakyThrows
     @Override
-    public void addCommune(BigDecimal price, BigDecimal code) {
+    public void addCommune(BigDecimal price, String code) {
         var communes = new Communes();
         communes.setCode(code);
         communes.setPrice(price.intValue());

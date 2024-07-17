@@ -13,6 +13,6 @@ public class Communes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal code;
+    private String code;
     private Integer price;
 }

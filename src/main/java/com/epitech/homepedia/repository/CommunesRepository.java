@@ -9,11 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface CommunesRepository extends JpaRepository<Communes, Long> {
-    List<Communes> findAllByNom(String region);
-
-    Optional<Communes> findByNom(String regionName);
-
-    Optional<Communes> findByCode(String codeReg);
-
-    List<Communes> findAllByCode(String codeReg);
 }

@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/api/v1/commune")
+@RequestMapping("/api/v1/communes")
 @RequiredArgsConstructor
 public class CommunesController {
     private final CommunesService regionService;
 
     @PostMapping
-    public ResponseEntity<String> createRegion(@RequestBody FeatureCollection featureCollection) {
-        regionService.addCommune(featureCollection);
+    public ResponseEntity<String> createRegion(@RequestParam BigDecimal priceMaison,
+                                               @RequestParam BigDecimal priceAppart,
+                                               @RequestParam String name) {
+        regionService.addCommune(priceMaison,priceAppart,name);
         return ResponseEntity.ok("Region created");
     }
 

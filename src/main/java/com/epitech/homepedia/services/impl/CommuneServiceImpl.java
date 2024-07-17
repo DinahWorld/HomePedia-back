@@ -27,12 +27,10 @@ public class CommuneServiceImpl implements CommunesService {
 
     @SneakyThrows
     @Override
-    public void addCommune(BigDecimal priceMaison,BigDecimal priceAppart, String name) {
+    public void addCommune(BigDecimal price, Integer code) {
         var communes = new Communes();
-        communes.setName(name);
-        communes.setPrice(priceMaison.intValue() + priceAppart.intValue() / 2);
-        communes.setPriceMaison(priceMaison.intValue());
-        communes.setPriceAppart(priceAppart.intValue());
+        communes.setCode(code);
+        communes.setPrice(price.intValue());
         regionRepository.save(communes);
     }
 

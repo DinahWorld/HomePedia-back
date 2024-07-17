@@ -3,7 +3,6 @@ package com.epitech.homepedia.controller;
 import com.epitech.homepedia.dto.RegionDTO;
 import com.epitech.homepedia.services.CommunesService;
 import lombok.RequiredArgsConstructor;
-import org.geojson.FeatureCollection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +15,9 @@ public class CommunesController {
     private final CommunesService regionService;
 
     @PostMapping
-    public ResponseEntity<String> createRegion(@RequestParam BigDecimal priceMaison,
-                                               @RequestParam BigDecimal priceAppart,
-                                               @RequestParam String name) {
-        regionService.addCommune(priceMaison,priceAppart,name);
+    public ResponseEntity<String> createRegion(@RequestParam BigDecimal price,
+                                               @RequestParam Integer code) {
+        regionService.addCommune(price, code);
         return ResponseEntity.ok("Region created");
     }
 

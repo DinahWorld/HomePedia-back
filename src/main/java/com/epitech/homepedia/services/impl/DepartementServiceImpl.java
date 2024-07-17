@@ -258,7 +258,7 @@ public class DepartementServiceImpl implements DepartmentService {
         List<DataDTO> color = new ArrayList<>();
         for (String c : code) {
             var departementList = departementRepository.findAllByCode(c);
-            color.add(new DataDTO(departementList.get(0).getNom(), departementList.get(0).getPriceMaison()));
+            color.add(new DataDTO(departementList.get(0).getCode(), departementList.get(0).getPriceMaison()));
         }
         var list = communesRepository.findAll();
 

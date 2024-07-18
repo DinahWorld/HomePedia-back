@@ -1,20 +1,12 @@
 package com.epitech.homepedia.services;
 
-import com.epitech.homepedia.dto.DepartmentDTO;
-import com.epitech.homepedia.model.Department;
+import com.epitech.homepedia.model.Departements;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface DepartmentService {
-    List<DepartmentDTO> getAllDepartement();
+    List<Departements> getAll();
 
-    DepartmentDTO getDepartementDTO(Long id);
-
-    void addDepartement(DepartmentDTO department);
-
-    void updateDepartementName(Long id, DepartmentDTO department);
-
-    void deleteDepartement(Long id);
-
-    Department getDepartementByName(String name);
+    void addDepartment(BigDecimal price, String code);
 }

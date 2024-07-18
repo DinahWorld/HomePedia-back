@@ -1,6 +1,7 @@
 package com.epitech.homepedia.dto;
 
 import com.epitech.homepedia.model.Communes;
+import com.epitech.homepedia.model.Departements;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class BigDataDTO {
-    private List<DataDTO> departements;
+    private List<Departements> departements;
     private List<Communes> communes;
 }

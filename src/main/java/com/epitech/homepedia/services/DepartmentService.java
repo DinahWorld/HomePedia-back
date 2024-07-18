@@ -1,19 +1,12 @@
 package com.epitech.homepedia.services;
 
-import com.epitech.homepedia.dto.BigDataDTO;
-import com.epitech.homepedia.dto.DepartmentDTO;
-import org.geojson.FeatureCollection;
+import com.epitech.homepedia.model.Departements;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface DepartmentService {
-    void addDepartement(FeatureCollection featureCollection);
+    List<Departements> getAll();
 
-    DepartmentDTO getDepartement(String region);
-
-    void addPriceMaison(BigDecimal price, String codeReg);
-
-    BigDataDTO getPriceColor();
-
-    void addPriceAppart(BigDecimal price, String codeReg);
+    void addDepartment(BigDecimal price, String code);
 }

@@ -1,16 +1,12 @@
 package com.epitech.homepedia.services;
 
-import com.epitech.homepedia.dto.RegionDTO;
-import org.geojson.FeatureCollection;
+import com.epitech.homepedia.model.Communes;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface CommunesService {
     void addCommune(BigDecimal price, String code);
 
-    RegionDTO getCommune(String region);
-
-    void addPriceAppart(BigDecimal price, String codeReg);
-
-    void addPriceMaison(BigDecimal price, String codeReg);
+    List<Communes> getAll();
 }
